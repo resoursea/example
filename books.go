@@ -2,7 +2,7 @@ package main
 
 import (
 	"errors"
-	"github.com/resourcerest/api"
+	"github.com/resoursea/api"
 )
 
 type Books []Book

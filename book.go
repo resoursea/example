@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/extemporalgenome/slug"
-	"github.com/resourcerest/api"
+	"github.com/resoursea/api"
 )
 
 type BookNotFoundError error
