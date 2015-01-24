@@ -15,12 +15,12 @@ type BookResp struct {
 }
 
 //
-// Test [GET] /api/categories/default/books/default-book
+// Test [GET] /api/categories/uncategorized/books/default-book
 //
 func TestGETBook(t *testing.T) {
 
 	w := httptest.NewRecorder()
-	req, err := http.NewRequest("GET", "/api/categories/default/books/default-book", nil)
+	req, err := http.NewRequest("GET", "/api/categories/uncategorized/books/default-book", nil)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -50,7 +50,7 @@ func TestGETBook(t *testing.T) {
 }
 
 //
-// Test [POST] /api/categories/default/books
+// Test [POST] /api/categories/uncategorized/books
 //
 func TestPOSTBook(t *testing.T) {
 
@@ -65,7 +65,7 @@ func TestPOSTBook(t *testing.T) {
 	}
 
 	w := httptest.NewRecorder()
-	req, err := http.NewRequest("POST", "/api/categories/animals/books", bytes.NewBuffer(b))
+	req, err := http.NewRequest("POST", "/api/categories/uncategorized/books", bytes.NewBuffer(b))
 	if err != nil {
 		t.Error(err)
 	}
@@ -97,12 +97,12 @@ func TestPOSTBook(t *testing.T) {
 }
 
 //
-// Test [POST] /api/categories/default/books/default-book/like
+// Test [POST] /api/categories/uncategorized/books/default-book/like
 //
 func TestPOSTBookLike(t *testing.T) {
 
 	w := httptest.NewRecorder()
-	req, err := http.NewRequest("POST", "/api/categories/animals/books/default-book/like", nil)
+	req, err := http.NewRequest("POST", "/api/categories/uncategorized/books/default-book/like", nil)
 	if err != nil {
 		t.Error(err)
 	}

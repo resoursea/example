@@ -13,12 +13,12 @@ type BooksResp struct {
 }
 
 //
-// Test [GET] /api/categories/default/books
+// Test [GET] /api/categories/uncategorized/books
 //
 func TestGETBooks(t *testing.T) {
 
 	w := httptest.NewRecorder()
-	req, err := http.NewRequest("GET", "/api/categories/default/books", nil)
+	req, err := http.NewRequest("GET", "/api/categories/uncategorized/books", nil)
 	if err != nil {
 		log.Panic(err)
 	}

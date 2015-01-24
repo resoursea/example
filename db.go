@@ -10,19 +10,24 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+// These constants stores the database name, user and password
 const (
 	dbname = "bookstore"
 	dbuser = "app"
 	dbpass = "SecretPassword!"
 )
 
+// This resource represents the DB connection
 type DB struct {
 	*sqlx.DB
 }
 
-// The only one DB instance
+// The only one DB instance is stored here
+// and will be used in the Resource tree creation in the main file
 var db *DB = &DB{}
 
+// This method connect to the database and creates the tables
+// It also creates the initial table values
 func init() {
 	dbx, err := sqlx.Open("mysql", dbuser+":"+dbpass+"@/"+dbname+"?charset=utf8&parseTime=true")
 	if err != nil {
@@ -35,6 +40,8 @@ func init() {
 	createBooksTable(db)
 }
 
+// Try to create the table that stores the categories
+// and try to create the initial categories
 func createCategoryTable(db *DB) {
 	_, err := db.Exec(categorySchema)
 	if err != nil {
@@ -68,6 +75,8 @@ func createCategoryTable(db *DB) {
 	}
 }
 
+// Try to create the table that stores the Books
+// It also creates a default book for test reasons
 func createBooksTable(db *DB) {
 	_, err := db.Exec(booksSchema)
 	if err != nil {
@@ -93,6 +102,7 @@ func createBooksTable(db *DB) {
 	}
 }
 
+// The list of categories
 var categoryList = []string{
 	"Uncategorized",
 	"Animals",
@@ -122,6 +132,7 @@ var categoryList = []string{
 	"Videos",
 }
 
+// The default book
 var bookDefault = Book{
 	BookID:      "default",
 	CategoryID:  "default",
@@ -134,6 +145,7 @@ var bookDefault = Book{
 	Deleted:     false,
 }
 
+// The schema for the Categories table
 const categorySchema = ` 
 CREATE TABLE IF NOT EXISTS category (
   categoryid VARCHAR(40) NOT NULL,
@@ -143,6 +155,7 @@ CREATE TABLE IF NOT EXISTS category (
   UNIQUE INDEX categoryslug_UNIQUE (categoryslug ASC))
 `
 
+// The schema for the Books table
 const booksSchema = `
 CREATE TABLE IF NOT EXISTS book (
   bookid VARCHAR(20) NOT NULL,

@@ -1,13 +1,21 @@
 package main
 
-// The main resource of this API
+// The main Resource of this API
+// It abstracts all the REST service
+// through an idiomatic Go way
 type Api struct {
-	Version    int
-	Env        Env
-	Categories *Categories
-	DB         *DB
+	Version int
+	Message string `json:"welcome"` // Rename this property
+
+	Categories *Categories `json:"-"` // This Resource will be accessible on /api/categories
+	DB         *DB         `json:"-"` // This Resource will be injected when needed
+	// The DB Resource has no methods accessible by the client
 }
 
-func (a *Api) GET() string {
-	return "This is the REST API for a book store"
+// [GET] /api
+// Receives the initial state of this resource and return it
+// The initial state of all Resources is passed
+// in the creation of the Resource in the main file
+func (a *Api) GET() *Api {
+	return a
 }
