@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"github.com/dchest/uniuri"
 	"net/http"
 	"reflect"
@@ -39,8 +38,6 @@ func TestBookPOST(t *testing.T) {
 
 	if !reflect.DeepEqual(book, bookResp) {
 		t.Error("Book returned by BookPOST is wrong")
-		fmt.Println(book)
-		fmt.Println(bookResp)
 	}
 
 }

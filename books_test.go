@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -20,7 +19,7 @@ func TestGETBooks(t *testing.T) {
 	w := httptest.NewRecorder()
 	req, err := http.NewRequest("GET", "/api/categories/uncategorized/books", nil)
 	if err != nil {
-		log.Panic(err)
+		t.Error(err)
 	}
 
 	route.ServeHTTP(w, req)

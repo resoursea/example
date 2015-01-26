@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"github.com/dchest/uniuri"
-	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -22,7 +21,7 @@ func TestGETBook(t *testing.T) {
 	w := httptest.NewRecorder()
 	req, err := http.NewRequest("GET", "/api/categories/uncategorized/books/default-book", nil)
 	if err != nil {
-		log.Panic(err)
+		t.Error(err)
 	}
 
 	route.ServeHTTP(w, req)
@@ -47,6 +46,7 @@ func TestGETBook(t *testing.T) {
 	if bookResp.Book.BookID != "default" {
 		t.Error("Book default not returned into the answare")
 	}
+
 }
 
 //

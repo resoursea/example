@@ -6,29 +6,23 @@ import (
 	"net/http"
 )
 
-var route *api.Route
+var route api.Router
 
 func init() {
-	// Creating a new Api Resource tree
-	// Here is added the initial values for the resources
-	resource, err := api.NewResource(Api{
+	// Create a Route tree to access the created Resource tree
+	var err error
+	route, err = api.NewRoute(Api{
 		Version: 1,
 		Message: "This is the REST API for a book store",
 		DB:      db,
 	})
 	if err != nil {
-		log.Fatalf("Error creating the Api resource: %s\n", err)
-	}
-
-	// Create a Route tree to access the created Resource tree
-	route, err = api.NewRoute(resource)
-	if err != nil {
 		log.Fatalf("Error creating the Route: %s\n", err)
 	}
 
-	// Print the Resource and Route trees
-	//api.PrintResource(resource)
-	//api.PrintRoute(route)
+	// Print the Router
+	// See if the Resource tree corresponds with what it should be
+	api.PrintRouter(route)
 }
 
 func main() {
