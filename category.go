@@ -25,7 +25,7 @@ type CategoryNotFoundError error
 // The creator method for the Category resource
 // This method will be called whenever the resource is requested
 // It inject one Category or one CategoryNotFoundError in the pipeline
-func (c *Category) Init(id *api.ID, db *DB) (*Category, error) {
+func (c *Category) Init(id api.ID, db *DB) (*Category, error) {
 	// api.ID will never be null
 	// Because all routes that requires the Category resource are children of Category
 	// So to access them the client should use an route like: /api/category/:CategorySlug/...

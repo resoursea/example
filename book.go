@@ -32,7 +32,7 @@ type BookNotFoundError error
 // This method receives the the resources: DB, Category, ID or an error
 // The book Resource is inside an category, so it should be injected to identify the Book the client is requesting
 // It inject one Book or one BookNotFoundError in the pipeline
-func (b *Book) Init(db *DB, cat *Category, id *api.ID, err error) (*Book, error) {
+func (b *Book) Init(db *DB, cat *Category, id api.ID, err error) (*Book, error) {
 	if err != nil {
 		return nil, err
 	}

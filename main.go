@@ -22,7 +22,7 @@ func init() {
 
 	// Print the Router
 	// See if the Resource tree corresponds with what it should be
-	api.PrintRouter(route)
+	//api.PrintRouter(route)
 }
 
 func main() {
