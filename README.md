@@ -1,5 +1,10 @@
-# A showcase for the Resoursea framework
-This is a showcase for a bookstore that demonstrate how to create a REST service using the Resoursea framework.
+# [Resoursea](http://resoursea.com)
+
+A high productivity web framework for quickly writing resource based services fully implementing the REST architectural style.
+
+## What is it?
+
+It is an example of a service written in Go using the Resoursea framework
 
 ## Getting Started
 
@@ -19,14 +24,24 @@ Install this service using the `go get` tool:
 go get github.com/resoursea/example
 ~~~
 
+Go to the installed package folder:
+
+~~~
+cd $GOPATH/src/github.com/resoursea/example/
+~~~
+
 Then compile it:
 
 ~~~
-go build github.com/resoursea/example
+go build
 ~~~
 
 And run it:
 
 ~~~
-$GOPATH/src/github.com/resoursea/example/example
+./example
 ~~~
+
+## Larn More
+
+[The concept, Samples, Documentation, interfaces and resources to use...](http://resoursea.com)

@@ -1,9 +1,11 @@
 package main
 
 import (
-	"github.com/resoursea/api"
 	"log"
 	"net/http"
+
+	"github.com/resoursea/api"
+	"github.com/resoursea/printer"
 )
 
 var route api.Router
@@ -11,7 +13,7 @@ var route api.Router
 func init() {
 	// Create a Route tree to access the created Resource tree
 	var err error
-	route, err = api.NewRoute(Api{
+	route, err = api.NewRouter(Api{
 		Version: 1,
 		Message: "This is the REST API for a book store",
 		DB:      db,
@@ -22,7 +24,7 @@ func init() {
 
 	// Print the Router
 	// See if the Resource tree corresponds with what it should be
-	//api.PrintRouter(route)
+	printer.Router(route)
 }
 
 func main() {
