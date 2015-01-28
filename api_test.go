@@ -8,6 +8,10 @@ import (
 )
 
 // The Api Resource response for [GET] /api
+type ApiData struct {
+	Api ApiResp
+}
+
 type ApiResp struct {
 	Version int
 	Welcome string
@@ -25,13 +29,14 @@ func TestApi(t *testing.T) {
 
 	route.ServeHTTP(w, req)
 
-	var resp ApiResp
+	var resp ApiData
 	err = json.Unmarshal(w.Body.Bytes(), &resp)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if resp.Version != 1 && resp.Welcome != "This is the REST API for a book store" {
+	if resp.Api.Version != 1 && resp.Api.Welcome != "This is the REST API for a book store" {
 		t.Fatal("[GET] /api answare is something different!")
 	}
+
 }
