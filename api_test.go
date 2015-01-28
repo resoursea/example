@@ -20,7 +20,7 @@ func TestApi(t *testing.T) {
 	w := httptest.NewRecorder()
 	req, err := http.NewRequest("GET", "/api", nil)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 
 	route.ServeHTTP(w, req)
@@ -28,10 +28,10 @@ func TestApi(t *testing.T) {
 	var resp ApiResp
 	err = json.Unmarshal(w.Body.Bytes(), &resp)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 
 	if resp.Version != 1 && resp.Welcome != "This is the REST API for a book store" {
-		t.Error("[GET] /api answare is something different!")
+		t.Fatal("[GET] /api answare is something different!")
 	}
 }

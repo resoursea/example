@@ -19,7 +19,7 @@ func TestGETBooks(t *testing.T) {
 	w := httptest.NewRecorder()
 	req, err := http.NewRequest("GET", "/api/categories/uncategorized/books", nil)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 
 	route.ServeHTTP(w, req)
@@ -28,20 +28,20 @@ func TestGETBooks(t *testing.T) {
 	errData := &ErrorResp{}
 	err = json.Unmarshal(w.Body.Bytes(), errData)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	if len(errData.Error) > 0 {
-		t.Error(errData.Error)
+		t.Fatal(errData.Error)
 	}
 
 	// Try to get the book from the response
 	booksResp := &BooksResp{}
 	err = json.Unmarshal(w.Body.Bytes(), booksResp)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 
 	if len(booksResp.Book) == 1 {
-		t.Error("Book list not returned into the answare")
+		t.Fatal("Book list not returned into the answare")
 	}
 }
