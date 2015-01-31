@@ -31,7 +31,7 @@ func TestBookPOST(t *testing.T) {
 
 	req.Header.Set("Content-Type", "application/json")
 
-	bookResp, err := book.Init(req)
+	bookResp, err := book.New(req)
 	if err != nil {
 		t.Fatal(err)
 	}
