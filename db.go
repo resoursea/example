@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"time"
 
@@ -22,30 +23,35 @@ type DB struct {
 	*sqlx.DB
 }
 
-// The only one DB instance is stored here
-// and will be used in the Resource tree creation in the main file
-var db *DB = &DB{}
-
+// The DB Initializer, it initializes the DB instance and is runned by the framework
 // This method connect to the database and creates the tables
 // It also creates the initial table values
-func init() {
+func (db *DB) Init() error {
 	dbx, err := sqlx.Open("mysql", dbuser+":"+dbpass+"@/"+dbname+"?charset=utf8&parseTime=true")
 	if err != nil {
-		log.Fatalf("DB connection Error:", err.Error())
+		return fmt.Errorf("DB connection Error:", err.Error())
 	}
 	db.DB = dbx
 
-	createCategoryTable(db)
+	err = createCategoryTable(db)
+	if err != nil {
+		return err
+	}
 
-	createBooksTable(db)
+	err = createBooksTable(db)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // Try to create the table that stores the categories
 // and try to create the initial categories
-func createCategoryTable(db *DB) {
+func createCategoryTable(db *DB) error {
 	_, err := db.Exec(categorySchema)
 	if err != nil {
-		log.Fatalf("Error creating the category schema. Err: %s\n", err.Error())
+		return fmt.Errorf("Error creating the category schema. Err: %s\n", err.Error())
 	}
 	// Inserting the categories
 	for i, categoryName := range categoryList {
@@ -53,7 +59,7 @@ func createCategoryTable(db *DB) {
 		count := 0
 		err := db.Get(&count, "select count(*) from category where categoryslug=?", categorySlug)
 		if err != nil {
-			log.Fatalf("Error searching for the category with categorySlug %s. Err: %s\n", categorySlug, err.Error())
+			return fmt.Errorf("Error searching for the category with categorySlug %s. Err: %s\n", categorySlug, err.Error())
 		}
 
 		if count == 0 {
@@ -67,26 +73,28 @@ func createCategoryTable(db *DB) {
 			_, err := db.Exec("INSERT INTO category (categoryid, categoryname, categoryslug) VALUES (?,?,?)",
 				categoryId, categoryName, categorySlug)
 			if err != nil {
-				log.Fatalf("Error when creating the category %s . Err: %s\n", categoryName, err)
+				return fmt.Errorf("Error when creating the category %s . Err: %s\n", categoryName, err)
 			} else {
 				log.Printf("Category %s created!\n", categoryName)
 			}
 		}
 	}
+
+	return nil
 }
 
 // Try to create the table that stores the Books
 // It also creates a default book for test reasons
-func createBooksTable(db *DB) {
+func createBooksTable(db *DB) error {
 	_, err := db.Exec(booksSchema)
 	if err != nil {
-		log.Fatalf("Error creating the category schema. Err: %s\n", err.Error())
+		return fmt.Errorf("Error creating the category schema. Err: %s\n", err.Error())
 	}
 	// Inserting the default book
 	count := 0
 	err = db.Get(&count, "select count(*) from book where bookid=?", "default")
 	if err != nil {
-		log.Fatalf("Error searching for the default book. Err: %s\n", err.Error())
+		return fmt.Errorf("Error searching for the default book. Err: %s\n", err.Error())
 	}
 
 	b := bookDefault
@@ -95,11 +103,13 @@ func createBooksTable(db *DB) {
 		_, err := db.Exec("INSERT INTO book (bookid, categoryid, title, slug, description, likecount, creation, lastupdate, deleted) VALUES (?,?,?,?,?,?,?,?,?)",
 			b.BookID, b.CategoryID, b.Title, b.Slug, b.Description, b.LikeCount, b.Creation, b.LastUpdate, b.Deleted)
 		if err != nil {
-			log.Fatalf("Error when creating the default book. Err: %s\n", err)
+			return fmt.Errorf("Error when creating the default book. Err: %s\n", err)
 		} else {
 			log.Printf("Default book created!\n")
 		}
 	}
+
+	return nil
 }
 
 // The list of categories

@@ -16,7 +16,7 @@ func init() {
 	route, err = api.NewRouter(Api{
 		Version: 1,
 		Message: "This is the REST API for a book store",
-		DB:      db,
+		DB:      nil, // Will be Initialized by the resource itself
 	})
 	if err != nil {
 		log.Fatalf("Error creating the Route: %s\n", err)

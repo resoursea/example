@@ -13,7 +13,7 @@ type Books []Book
 // It return a list of books inside this ategory or an BookNotFoundError
 // If no one Category was found by the Category creator method,
 // so an error will be received and returned to the client
-func (bs *Books) GET(cat *Category, err error) (*Books, error) {
+func (bs *Books) GET(db *DB, cat *Category, err error) (*Books, error) {
 	if err != nil {
 		return nil, err
 	}
