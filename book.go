@@ -46,7 +46,7 @@ func (b *Book) New(db *DB, cat *Category, id api.ID, err error) (*Book, error) {
 	return b, nil
 }
 
-// [GET] /api/categories/:CategorySlug/books/:CategorySlug
+// [GET] /api/categories/:CategorySlug/books/:BookID
 // It receives a Book and an error and return it to the client
 // When the book is requested the framework will call the Book's Creator method (Book.New)
 // It's creator can inject or the Book itself, or an error in the pipeline
